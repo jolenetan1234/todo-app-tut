@@ -15,6 +15,7 @@ const ShowTodoList = () => {
     //     };
     // });
 
+    // rmb to pass in dependency array!! Otherwise, it will be an infinite loop that keeps triggering a re-render
     useEffect(() => {
         axios.get("http://localhost:8000/api/todo")
         .then((res) => {
@@ -24,7 +25,7 @@ const ShowTodoList = () => {
         .catch((err) => {
             console.log(err);
         });
-    });
+    }, []);
 
   return (
     <div className="ShowTodoList">
