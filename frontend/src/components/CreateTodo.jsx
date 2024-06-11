@@ -1,7 +1,7 @@
 // this component sends a POST request to our `server` using axios.
 import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CreateTodo = () => {
   // declare `data` with `useState` hook
@@ -10,6 +10,8 @@ const CreateTodo = () => {
     description: "",
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     // update `data` when input changes
     // `...data` creates a shallow copy of `data`, and updates it with the attributes `[e.target.name]: e.target.value`
@@ -17,7 +19,7 @@ const CreateTodo = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // prevent page from reloading when submit button is clicked
+    e.preventDefault(); // prevent page from reloading when submit button is clicked, allowing us to custom handle form submission 
 
     // send POST request to server via axios.
     const postData = async () => {
@@ -25,7 +27,11 @@ const CreateTodo = () => {
         const res = await axios.post("http://localhost:8000/api/todo", data);
         // reset `data` to initial state
         setData({ title: "", description: "" });
+        // redirect back to home page
         console.log(res);
+        // NEVER CALL HOOKS INSIDE A NESTED FUNCTION!!
+        // const navigate = useNavigate(); 
+        navigate("/");
       } catch (err) {
         console.log("Failed to create todo");
         console.log(err);
