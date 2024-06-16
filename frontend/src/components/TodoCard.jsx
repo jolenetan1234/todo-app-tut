@@ -1,4 +1,4 @@
-const TodoCard = ({ data }) => {
+const TodoCard = ({ data, handleEdit }) => {
   return (
     <div className="TodoCard">
         <div className="title-description">
@@ -7,7 +7,7 @@ const TodoCard = ({ data }) => {
         </div>
 
         <div className="button-container">
-            <button className="button">edit</button>
+            <button className="button" name={data._id} onClick={handleEdit}>edit</button>
             <button className="button">delete</button>
         </div>
     </div>

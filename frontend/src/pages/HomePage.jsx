@@ -5,7 +5,6 @@ const HomePage = () => {
   return (
     <div className="HomePage">
       <ShowTodoList />
-      <Link to="/create-todo">Create new todo</Link>
     </div>
   );
 };
