@@ -70,7 +70,7 @@ const ShowTodoList = () => {
                     <p onClick={handleClose}>
                         &times;
                     </p>
-                    <UpdateTodo handleClose={handleClose} handleUpdate={handleUpdate}/>
+                    <UpdateTodo _id={id} handleClose={handleClose} handleUpdate={handleUpdate}/>
                 </div>
             </div>
         ) : (

@@ -1,14 +1,24 @@
 // make it such that when "edit", this page renders. And this has 1 form with 2 inputs. Then use setTodo to update the todo, and onSubmit make a PUT request to server.
 // we are gonna make this render WITHOUT redirecting (using states).
 // basically same as CreateTodo except we use PUT instead of POST.
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const UpdateTodo = ({ _id, handleClose, handleUpdate }) => {
   const [todo, setTodo] = useState({title: "", description: ""});
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchTodo = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8000/api/todo/${_id}`);
+        setTodo({title: res.data.title, description: res.data.description})
+        console.log(todo);
+      } catch (err) {
+        console.log(err);
+      };
+    };
+    fetchTodo();
+  }, []);
 
   // handle change => set state `data`
   const handleChange = (e) => {
@@ -23,10 +33,9 @@ const UpdateTodo = ({ _id, handleClose, handleUpdate }) => {
     // send PUT request to server
     const putData = async () => {
       try {
-        const res = await axios.put(`http://localhost:8000/api/todo/${_id}`);
+        const res = await axios.put(`http://localhost:8000/api/todo/${_id}`, todo);
         console.log(`Successfully updated todo id ${_id}`);
         console.log(res);
-        navigate("/");
 
       } catch (err) {
         console.log(err);
@@ -51,14 +60,12 @@ const UpdateTodo = ({ _id, handleClose, handleUpdate }) => {
           <input 
           placeholder="title" 
           name="title" 
-          value={todo.title} 
           onChange={handleChange}
           />
 
           <input 
           placeholder="description" 
           name="description" 
-          value={todo.description} 
           onChange={handleChange}
           />
 
