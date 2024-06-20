@@ -7,6 +7,7 @@ import axios from "axios";
 const UpdateTodo = ({ _id, handleClose, handleUpdate }) => {
   const [todo, setTodo] = useState({title: "", description: ""});
 
+  // such that initial state of `todo` is what is in the database (instead of empty string)
   useEffect(() => {
     const fetchTodo = async () => {
       try {
